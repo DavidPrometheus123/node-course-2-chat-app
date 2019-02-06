@@ -22,16 +22,17 @@ io.on("connection", function(socket) {
 
 //Emitting the events
     
-    socket.emit("newMessage", {
-       from: "Ivan",
-       text: "Ufo Guy",
-       createdAt: Date.now()
-    });
     
     //listening for events
     
-    socket.on("createMessage", function(newMessage) {
-       console.log("Here is your new message: ", newMessage); 
+    socket.on("createMessage", function(message) {
+       console.log("Here is your new message: ", message); 
+       
+       io.emit("newMessage", {
+           from:message.from,
+           text:message.text,
+           createdAt: new Date().getTime()
+       });
     });
     
     socket.on("disconnect", function() {
